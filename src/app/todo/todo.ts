@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Todo } from '../models/todo';
 
 @Component({
   selector: 'app-todo',
@@ -10,13 +11,19 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./todo.css'],
 })
 export class TodoComponent {
-  todos: string[] = [];
-  newTodo: string = '';
+  todos: Todo[] = [];
+  newTitle: string = '';
+  newDescription: string = '';
 
   addTodo() {
-    if (this.newTodo.trim()) {
-      this.todos.push(this.newTodo);
-      this.newTodo = '';
+    if (this.newTitle.trim()) {
+      this.todos.push({
+        title: this.newTitle,
+        description: this.newDescription,
+      });
+
+      this.newTitle = '';
+      this.newDescription = '';
     }
   }
 

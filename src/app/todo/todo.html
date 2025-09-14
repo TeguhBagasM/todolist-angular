@@ -1,11 +1,13 @@
-<h2>📝 Todo List</h2>
-
-<input [(ngModel)]="newTodo" placeholder="Tambah todo" />
-<button (click)="addTodo()">Tambah</button>
+<h2>Todo List</h2>
+<div class="form-group">
+  <input [(ngModel)]="newTitle" placeholder="Judul todo" />
+  <input [(ngModel)]="newDescription" placeholder="Deskripsi todo" />
+  <button (click)="addTodo()">Tambah</button>
+</div>
 
 <ul>
   <li *ngFor="let todo of todos; let i = index">
-    {{ todo }}
+    <strong>{{ todo.title }}</strong> - {{ todo.description }}
     <button (click)="removeTodo(i)">Hapus</button>
   </li>
 </ul>
