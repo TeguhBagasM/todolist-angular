@@ -1,0 +1,11 @@
+<h2>Notes</h2>
+
+<input [(ngModel)]="newNote" placeholder="Tambah Catatan">
+<button (click)="addNote()">Tambah</button>
+
+<ul>
+  <li *ngFor="let note of notes; let i = index">
+    {{ note }}
+    <button (click)="removeNote(i)">Hapus</button>
+  </li>
+</ul>
