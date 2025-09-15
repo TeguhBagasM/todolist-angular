@@ -1,12 +1,194 @@
-<h2>Todo List</h2>
+<main class="lg:ml-64 pt-16 min-h-screen bg-gradient-to-br from-gray-50 to-purple-50/30">
+  <div class="p-6 lg:p-8">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center space-x-4">
+        <div
+          class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center"
+        >
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h1
+            class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+          >
+            Todo List
+          </h1>
+          <p class="text-gray-600">Kelola semua tugas dan aktivitas Anda</p>
+        </div>
+      </div>
 
-<input [(ngModel)]="newTitle" placeholder="Judul todo" />
-<input [(ngModel)]="newDescription" placeholder="Deskripsi todo" />
-<button (click)="addTodo()">Tambah</button>
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="bg-white/70 backdrop-blur-sm rounded-xl px-4 py-2 border border-gray-200/50">
+          <span class="text-sm text-gray-600">Total: </span>
+          <span class="font-bold text-purple-600">{{ todos.length }}</span>
+        </div>
+      </div>
+    </div>
 
-<ul>
-  <li *ngFor="let todo of todos; let i = index">
-    <strong>{{ todo.title }}</strong> - {{ todo.description }}
-    <button (click)="removeTodo(i)">Hapus</button>
-  </li>
-</ul>
+    <!-- Add Todo Form -->
+    <div
+      class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-gray-200/50 shadow-sm mb-8"
+    >
+      <h2 class="text-xl font-bold text-gray-900 mb-6">Tambah Tugas Baru</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700">Judul Tugas</label>
+          <input
+            [(ngModel)]="newTitle"
+            placeholder="Masukkan judul tugas..."
+            class="w-full px-4 py-3 bg-white/50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+          <input
+            [(ngModel)]="newDescription"
+            placeholder="Masukkan deskripsi tugas..."
+            class="w-full px-4 py-3 bg-white/50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+          />
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button
+          (click)="addTodo()"
+          class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="!newTitle.trim()"
+        >
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 4v16m8-8H4"
+            ></path>
+          </svg>
+          Tambah Tugas
+        </button>
+      </div>
+    </div>
+
+    <!-- Todo List -->
+    <div class="bg-white/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 shadow-sm">
+      <div class="p-6 lg:p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-900">Daftar Tugas</h2>
+          <div class="flex items-center space-x-2" *ngIf="todos.length > 0">
+            <span class="text-sm text-gray-500">{{ todos.length }} tugas</span>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="todos.length === 0" class="text-center py-12">
+          <div
+            class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4"
+          >
+            <svg
+              class="w-10 h-10 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada tugas</h3>
+          <p class="text-gray-500 max-w-md mx-auto">
+            Tambahkan tugas pertama Anda untuk mulai mengatur aktivitas harian.
+          </p>
+        </div>
+
+        <!-- Todo Items -->
+        <div class="space-y-4" *ngIf="todos.length > 0">
+          <div
+            *ngFor="let todo of todos; let i = index"
+            class="group flex items-center justify-between p-4 lg:p-6 bg-white/60 hover:bg-white/80 rounded-xl border border-gray-200/50 hover:border-purple-200 transition-all duration-300 hover:shadow-md"
+          >
+            <div class="flex items-start space-x-4 flex-1">
+              <div
+                class="w-10 h-10 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center mt-1"
+              >
+                <svg
+                  class="w-5 h-5 text-purple-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ todo.title }}</h3>
+                <p class="text-gray-600 text-sm leading-relaxed" *ngIf="todo.description">
+                  {{ todo.description }}
+                </p>
+                <p class="text-gray-400 text-sm italic" *ngIf="!todo.description">
+                  Tidak ada deskripsi
+                </p>
+              </div>
+            </div>
+
+            <button
+              (click)="removeTodo(i)"
+              class="ml-4 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all duration-200 opacity-0 group-hover:opacity-100"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Stats -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6" *ngIf="todos.length > 0">
+      <div
+        class="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 text-center"
+      >
+        <div class="text-2xl font-bold text-purple-600">{{ todos.length }}</div>
+        <div class="text-sm text-gray-600">Total Tugas</div>
+      </div>
+
+      <div
+        class="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 text-center"
+      >
+        <div class="text-2xl font-bold text-green-600">0</div>
+        <div class="text-sm text-gray-600">Selesai</div>
+      </div>
+
+      <div
+        class="bg-white/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200/50 text-center"
+      >
+        <div class="text-2xl font-bold text-orange-600">{{ todos.length }}</div>
+        <div class="text-sm text-gray-600">Pending</div>
+      </div>
+    </div>
+  </div>
+</main>
